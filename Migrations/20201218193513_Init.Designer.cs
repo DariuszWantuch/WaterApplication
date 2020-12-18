@@ -10,7 +10,7 @@ using WaterApplication.Data;
 namespace WaterApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201218191218_Init")]
+    [Migration("20201218193513_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -246,7 +246,7 @@ namespace WaterApplication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AktywnoscId")
+                    b.Property<int>("AktywnoscId")
                         .HasColumnType("int");
 
                     b.Property<int>("Ammount")
@@ -319,7 +319,9 @@ namespace WaterApplication.Migrations
                 {
                     b.HasOne("WaterApplication.Models.Aktywnosc", "Aktywnosc")
                         .WithMany()
-                        .HasForeignKey("AktywnoscId");
+                        .HasForeignKey("AktywnoscId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()

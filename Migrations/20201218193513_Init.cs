@@ -174,7 +174,7 @@ namespace WaterApplication.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Ammount = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
-                    AktywnoscId = table.Column<int>(nullable: true)
+                    AktywnoscId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -184,7 +184,7 @@ namespace WaterApplication.Migrations
                         column: x => x.AktywnoscId,
                         principalTable: "Aktywnosc",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ilosc_AspNetUsers_UserId",
                         column: x => x.UserId,

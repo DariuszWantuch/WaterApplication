@@ -244,7 +244,7 @@ namespace WaterApplication.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AktywnoscId")
+                    b.Property<int>("AktywnoscId")
                         .HasColumnType("int");
 
                     b.Property<int>("Ammount")
@@ -317,7 +317,9 @@ namespace WaterApplication.Migrations
                 {
                     b.HasOne("WaterApplication.Models.Aktywnosc", "Aktywnosc")
                         .WithMany()
-                        .HasForeignKey("AktywnoscId");
+                        .HasForeignKey("AktywnoscId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
