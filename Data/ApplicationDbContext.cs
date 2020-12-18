@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using WaterApplication.Models;
 
 namespace WaterApplication.Data
 {
@@ -12,5 +13,12 @@ namespace WaterApplication.Data
             : base(options)
         {
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+        }
+
+        public DbSet<Ilosc> Ilosc { get; set; }
+        public DbSet<Aktywnosc> Aktywnosc { get; set; }
     }
 }
