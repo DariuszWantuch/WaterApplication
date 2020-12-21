@@ -7,30 +7,30 @@
 
 <h1>Create</h1>
 
-<h4>Ilosc</h4>
+<h4>Aktywność</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Ammount" class="control-label"></label>
+                <label asp-for="Ammount" class="control-label">Ilość użycia w tygodniu</label>
                 <input asp-for="Ammount" class="form-control" />
                 <span asp-validation-for="Ammount" class="text-danger"></span>
             </div>          
             <div class="form-group">
-                <label asp-for="AktywnoscId" class="control-label"></label>
+                <label asp-for="AktywnoscId" class="control-label">Rodzaj aktywności</label>
                 <select asp-for="AktywnoscId" class ="form-control" asp-items="ViewBag.AktywnoscId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Dodaj" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Powrót</a>
 </div>
 
 @section Scripts {

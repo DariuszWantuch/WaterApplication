@@ -1,42 +1,128 @@
-﻿@model IEnumerable<WaterApplication.Models.Ilosc>
+﻿@model AllModel
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int iloscWody = 0;
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Ammount)
-            </th>         
-            <th>
-                @Html.DisplayNameFor(model => model.Aktywnosc)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Ammount)
-            </td>         
-            <td>
-                @Html.DisplayFor(modelItem => item.Aktywnosc.Name)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+@foreach (var item in Model.allIlosc)
+{
+    @foreach (var items in Model.allAktywnosc)
+    {
+        @if (item.AktywnoscId == items.Id)
+        {
+            iloscWody += item.Ammount * items.WaterAmount;
+        }
+    }
 }
-    </tbody>
-</table>
+<h1 style="text-align:center; margin-top:80px">Kalkulator zużycia wody</h1>
+<div class="row" style="padding-top: 20px">
+    <div class="col-lg-8">
+        <div class="row">
+            <div class="col-lg-4">
+                <p>                  
+                     <a asp-action="Create">Dodaj aktywność</a>                
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    @if (Model.allCostWater.Count() != 0)
+                    {
+                        foreach (var item in Model.allCostWater)
+                        {
+                            <a asp-action="EditCost" asp-route-id="@item.Id">Edytuj koszt wody</a>
+                        }
+
+                    }
+                    else
+                    {
+                        <a asp-action="CreateCost">Dodaj koszt wody</a>                      
+                    }
+                </p>
+                           
+            </div>
+            <div class="col-lg-4">
+                <p>
+                    Koszt m<sup>3</sup> wody: @foreach (var item in Model.allCostWater)
+                    {
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    }
+                    zł
+                </p>
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Ilość użyć(tydzień)
+                    </th>
+                    <th>
+                        Rodzaj aktywności
+                    </th>
+                    <th>
+                        Iloś wody( l )
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model.allIlosc)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ammount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Aktywnosc.Name)
+                        </td>
+                        <td>
+                            @foreach (var items in Model.allAktywnosc)
+                            {
+                                @if (item.AktywnoscId == items.Id)
+                                {
+                                    @(items.WaterAmount)
+                                }
+}
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edytuj</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Usuń</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-4">
+        <h5>Zużycie oraz koszt wody tygodniwo:</h5>
+        <div class="row">
+
+            <div class="col-lg-5" style="text-align:right">
+                <p>Ilość wody:</p>
+                <p>Koszt:</p>
+            </div>
+            <div class="col-lg-7">
+                <p>
+                    <b>@(iloscWody) </b>
+                    litrów
+                </p>
+                <p>
+                    <b>
+                        @foreach (var item in Model.allCostWater)
+                        {
+                            @Math.Round(((iloscWody * item.Cost) / 1000), 2)
+                        }
+                    </b>
+                    zł
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

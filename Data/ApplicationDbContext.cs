@@ -19,6 +19,7 @@ namespace WaterApplication.Data
         }
 
         public DbSet<Ilosc> Ilosc { get; set; }
+        public DbSet<CostWater> CostWater { get; set; }
         public DbSet<Aktywnosc> Aktywnosc { get; set; }
     }
 }

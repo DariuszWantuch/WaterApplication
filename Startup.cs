@@ -9,9 +9,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using WaterApplication.Data;
+using WaterApplication.Models;
 
 namespace WaterApplication
 {
@@ -36,6 +38,8 @@ namespace WaterApplication
             services.AddRazorPages();
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +56,14 @@ namespace WaterApplication
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            app.UseRequestLocalization();
+
+
+            var cultureInfo = new CultureInfo("en-US");          
+
+            CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+            CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

@@ -167,6 +167,26 @@ namespace WaterApplication.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CostWater",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cost = table.Column<float>(nullable: false),
+                    UserId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CostWater", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CostWater_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Ilosc",
                 columns: table => new
                 {
@@ -233,6 +253,11 @@ namespace WaterApplication.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CostWater_UserId",
+                table: "CostWater",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Ilosc_AktywnoscId",
                 table: "Ilosc",
                 column: "AktywnoscId");
@@ -259,6 +284,9 @@ namespace WaterApplication.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "CostWater");
 
             migrationBuilder.DropTable(
                 name: "Ilosc");

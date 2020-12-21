@@ -10,7 +10,7 @@ using WaterApplication.Data;
 namespace WaterApplication.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201218193513_Init")]
+    [Migration("20201221113623_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -239,6 +239,26 @@ namespace WaterApplication.Migrations
                     b.ToTable("Aktywnosc");
                 });
 
+            modelBuilder.Entity("WaterApplication.Models.CostWater", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<float>("Cost")
+                        .HasColumnType("real");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("CostWater");
+                });
+
             modelBuilder.Entity("WaterApplication.Models.Ilosc", b =>
                 {
                     b.Property<int>("Id")
@@ -313,6 +333,13 @@ namespace WaterApplication.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("WaterApplication.Models.CostWater", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("WaterApplication.Models.Ilosc", b =>
